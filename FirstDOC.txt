@@ -1,13 +1,13 @@
 Hi guys lets start coding
 
-package com.ril.dip.tools.crypt.ssha;
+package .crypt.ssha;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-import com.ril.dip.tools.crypt.salt.SaltGenerator;
+import .crypt.salt.SaltGenerator;
 import org.apache.commons.codec.binary.Base64;
 
 public class SSHA {
@@ -102,4 +102,31 @@ public class SSHA {
         }
 
     }
+}
+###############
+
+package crypt.salt;
+
+import org.apache.commons.lang3.RandomStringUtils;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
+public class SaltGenerator {
+	
+	public static final int SIZE = 32;
+
+	//TODO remove exception to injected initer
+	public static String generate() {
+		SecureRandom sr = null;
+		try {
+			sr = SecureRandom.getInstance("SHA1PRNG");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		byte[] dummy = new byte[512];
+		sr.nextBytes(dummy);
+		return RandomStringUtils.random(SIZE, 0, 0, false, false, null, sr);
+	}
+
 }
